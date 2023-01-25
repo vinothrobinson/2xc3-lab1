@@ -90,6 +90,7 @@ def find_min_index(L, n):
     return min_index
 
 def experiment1(n, k):
+    total = []
     total1 = 0
     for _ in range(n):
         L = create_random_list(k, k)
@@ -99,6 +100,9 @@ def experiment1(n, k):
         insertion_sort(L)
         end = timeit.default_timer()
         total1 += end - start
+        total.append(total1)
+    return total
+
 
 times = experiment1(10, 10)
 plot.plot(times)
