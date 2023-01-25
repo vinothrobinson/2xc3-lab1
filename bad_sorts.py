@@ -89,19 +89,17 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
-def experiment1(n, m, step):
-    times = []
-    for i in range(0, n, step):
-        L = create_random_list(i, i)
-        time = 0
-        for _ in range(m):
-            start = timeit.default_timer()
-            L2 = L.copy()
-            end = timeit.default_time()
-            time += end - start
-            times.append(time)
-    return times
+def experiment1(n, k):
+    total1 = 0
+    for _ in range(n):
+        L = create_random_list(k, k)
+        L2 = L.copy()
 
-times = experiment1(10, 10, 2)
+        start = timeit.default_timer()
+        insertion_sort(L)
+        end = timeit.default_timer()
+        total1 += end - start
+
+times = experiment1(10, 10)
 plot.plot(times)
 plot.show()
