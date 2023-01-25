@@ -3,6 +3,8 @@ This file corresponds to the first graded lab of 2XC3.
 Feel free to modify and/or add functions to this file.
 """
 import random
+import timeit
+import matplotlib.pyplot as plot
 
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
@@ -86,3 +88,20 @@ def find_min_index(L, n):
         if L[i] < L[min_index]:
             min_index = i
     return min_index
+
+def experiment1(n, m, step):
+    times = []
+    for i in range(0, n, step):
+        L = create_random_list(i, i)
+        time = 0
+        for _ in range(m):
+            start = timeit.default_timer()
+            L2 = L.copy()
+            end = timeit.default_time()
+            time += end - start
+            times.append(time)
+    return times
+
+times = experiment1(10, 10, 2)
+plot.plot(times)
+plot.show()
