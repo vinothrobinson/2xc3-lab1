@@ -90,20 +90,42 @@ def find_min_index(L, n):
     return min_index
 
 def experiment1(n, k):
-    total = []
+    total_insertion = []
+    total_bubble = []
+    total_selection = []
     total1 = 0
-    for _ in range(n):
-        L = create_random_list(k, k)
-        L2 = L.copy()
+    total2 = 0
+    total3 = 0
+    for i in range(n):
+
+        L1 = create_random_list(i, k)
+        L2 = L1.copy()
+        L3 = L1.copy()
 
         start = timeit.default_timer()
-        insertion_sort(L)
+        insertion_sort(L1)
         end = timeit.default_timer()
         total1 += end - start
-        total.append(total1)
-    return total
+        total_insertion.append(total1)
 
+        start = timeit.default_timer()
+        bubble_sort(L2)
+        end = timeit.default_timer()
+        total2 += end - start
+        total_bubble.append(total2)
 
-times = experiment1(10, 10)
-plot.plot(times)
+        start = timeit.default_timer()
+        selection_sort(L3)
+        end = timeit.default_timer()
+        total3 += end - start
+        total_selection.append(total3)
+
+    return [total_insertion, total_bubble, total_selection]
+
+times = experiment1(100, 10)
+plot.plot(times[0])
+plot.show()
+plot.plot(times[1])
+plot.show()
+plot.plot(times[2])
 plot.show()

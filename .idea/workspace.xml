@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="d10818e3-22d7-4a4f-86ce-ab41deff3fa4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bad_sorts.py" beforeDir="false" afterPath="$PROJECT_DIR$/bad_sorts.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
