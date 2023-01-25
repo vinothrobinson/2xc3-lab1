@@ -89,6 +89,8 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
+# ******************* Testing Functions *******************
+
 def experiment1(n, k):
     total_insertion = []
     total_bubble = []
@@ -120,7 +122,7 @@ def experiment1(n, k):
         total3 += end - start
         total_selection.append(total3)
 
-    print("Inserction Sort: ", total1/n)
+    print("Insertion Sort: ", total1/n)
     print("Bubble Sort: ", total2/n)
     print("Selection Sort: ", total3/n)
 
