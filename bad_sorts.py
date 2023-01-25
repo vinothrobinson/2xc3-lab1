@@ -95,32 +95,37 @@ def experiment1(n, k):
     total_insertion = []
     total_bubble = []
     total_selection = []
-    total1 = 0
-    total2 = 0
-    total3 = 0
+
     for i in range(n):
 
-        L1 = create_random_list(i, k)
-        L2 = L1.copy()
-        L3 = L1.copy()
+        total1 = 0
+        total2 = 0
+        total3 = 0
 
-        start = timeit.default_timer()
-        insertion_sort(L1)
-        end = timeit.default_timer()
-        total1 += end - start
-        total_insertion.append(total1)
+        TRIAL_NUM = 100
+        for _ in range(TRIAL_NUM):
+            L1 = create_random_list(i, k)
+            L2 = L1.copy()
+            L3 = L1.copy()
 
-        start = timeit.default_timer()
-        bubble_sort(L2)
-        end = timeit.default_timer()
-        total2 += end - start
-        total_bubble.append(total2)
+            start = timeit.default_timer()
+            insertion_sort(L1)
+            end = timeit.default_timer()
+            total1 += end - start
 
-        start = timeit.default_timer()
-        selection_sort(L3)
-        end = timeit.default_timer()
-        total3 += end - start
-        total_selection.append(total3)
+            start = timeit.default_timer()
+            bubble_sort(L2)
+            end = timeit.default_timer()
+            total2 += end - start
+
+            start = timeit.default_timer()
+            selection_sort(L3)
+            end = timeit.default_timer()
+            total3 += end - start
+
+        total_insertion.append(total1/TRIAL_NUM)
+        total_bubble.append(total2/TRIAL_NUM)
+        total_selection.append(total3/TRIAL_NUM)
 
     print("Insertion Sort: ", total1/n)
     print("Bubble Sort: ", total2/n)
