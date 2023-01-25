@@ -95,6 +95,9 @@ def experiment1(n, k):
     total_insertion = []
     total_bubble = []
     total_selection = []
+    total1 = 0
+    total2 = 0
+    total3 = 0
 
     for i in range(n):
 
@@ -134,9 +137,19 @@ def experiment1(n, k):
     return [total_insertion, total_bubble, total_selection]
 
 times = experiment1(100, 10)
+
 plot.plot(times[0])
+plot.title("Insertion Sort: List Length vs. Time")
+plot.xlabel("List Length")
+plot.ylabel("Time (sec)")
 plot.show()
 plot.plot(times[1])
+plot.title("Bubble Sort: List Length vs. Time")
+plot.xlabel("List Length")
+plot.ylabel("Time (sec)")
 plot.show()
 plot.plot(times[2])
+plot.title("Selection Sort: List Length vs. Time")
+plot.xlabel("List Length")
+plot.ylabel("Time (sec)")
 plot.show()
