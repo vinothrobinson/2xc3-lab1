@@ -3,6 +3,8 @@ This file corresponds to the first graded lab of 2XC3.
 Feel free to modify and/or add functions to this file.
 """
 import random
+import timeit
+import matplotlib.pyplot as plot
 
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
@@ -86,3 +88,55 @@ def find_min_index(L, n):
         if L[i] < L[min_index]:
             min_index = i
     return min_index
+
+# ******************* Testing Functions *******************
+
+def experiment1(n, k):
+    total_insertion = []
+    total_bubble = []
+    total_selection = []
+
+    for i in range(n):
+
+        total1 = 0
+        total2 = 0
+        total3 = 0
+
+        TRIAL_NUM = 100
+        for _ in range(TRIAL_NUM):
+            L1 = create_random_list(i, k)
+            L2 = L1.copy()
+            L3 = L1.copy()
+
+            start = timeit.default_timer()
+            insertion_sort(L1)
+            end = timeit.default_timer()
+            total1 += end - start
+
+            start = timeit.default_timer()
+            bubble_sort(L2)
+            end = timeit.default_timer()
+            total2 += end - start
+
+            start = timeit.default_timer()
+            selection_sort(L3)
+            end = timeit.default_timer()
+            total3 += end - start
+
+        total_insertion.append(total1/TRIAL_NUM)
+        total_bubble.append(total2/TRIAL_NUM)
+        total_selection.append(total3/TRIAL_NUM)
+
+    print("Insertion Sort: ", total1/n)
+    print("Bubble Sort: ", total2/n)
+    print("Selection Sort: ", total3/n)
+
+    return [total_insertion, total_bubble, total_selection]
+
+times = experiment1(100, 10)
+plot.plot(times[0])
+plot.show()
+plot.plot(times[1])
+plot.show()
+plot.plot(times[2])
+plot.show()
