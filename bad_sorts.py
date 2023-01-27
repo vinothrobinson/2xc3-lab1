@@ -94,7 +94,7 @@ def find_min_index(L, n):
 # ******************* Testing Functions *******************
 
 
-def experiment1(n, k, functions):
+def experiment(n, k, functions):
     total_times = []
     for _ in range(len(functions)):
         total_times.append([])
@@ -133,8 +133,8 @@ def experiment1(n, k, functions):
         plot.show()
 
 
-functions = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"), \
-             function_info.FunctionInfo(bubble_sort, "Bubble Sort"), \
-             function_info.FunctionInfo(selection_sort, "Selection Sort"), \
+functions = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
+             function_info.FunctionInfo(bubble_sort, "Bubble Sort"),
+             function_info.FunctionInfo(selection_sort, "Selection Sort"),
              function_info.FunctionInfo(selection_sort2.selection_sort2, "Selection Sort 2")]
-experiment1(100, 10, functions)
+experiment(100, 10, functions)
