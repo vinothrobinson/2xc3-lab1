@@ -133,6 +133,7 @@ def experiment1(n, k):
 
     return [total_insertion, total_bubble, total_selection]
 
+
 times = experiment1(100, 10)
 plot.plot(times[0])
 plot.show()
