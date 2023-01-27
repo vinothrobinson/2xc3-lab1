@@ -5,6 +5,8 @@ Feel free to modify and/or add functions to this file.
 import random
 import timeit
 import matplotlib.pyplot as plot
+import function_info
+import selection_sort2
 
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
@@ -91,53 +93,48 @@ def find_min_index(L, n):
 
 # ******************* Testing Functions *******************
 
-def experiment1(n, k):
-    total_insertion = []
-    total_bubble = []
-    total_selection = []
+
+def experiment1(n, k, functions):
+    total_times = []
+    for _ in range(len(functions)):
+        total_times.append([])
+    trial_times = []
 
     for i in range(n):
 
-        total1 = 0
-        total2 = 0
-        total3 = 0
+        for _ in range(len(functions)):
+            trial_times.append(0)
+
+        test_lists = []
 
         TRIAL_NUM = 100
         for _ in range(TRIAL_NUM):
-            L1 = create_random_list(i, k)
-            L2 = L1.copy()
-            L3 = L1.copy()
+            test_lists.append(create_random_list(i, k))
+            for _ in range(1, len(functions)):
+                test_lists.append(test_lists[0].copy())
 
-            start = timeit.default_timer()
-            insertion_sort(L1)
-            end = timeit.default_timer()
-            total1 += end - start
+            for j in range(len(functions)):
+                start = timeit.default_timer()
+                functions[j].f(test_lists[j])
+                end = timeit.default_timer()
+                trial_times[j] += end - start
 
-            start = timeit.default_timer()
-            bubble_sort(L2)
-            end = timeit.default_timer()
-            total2 += end - start
+        for j in range(0, len(functions)):
+            total_times[j].append(trial_times[j] / TRIAL_NUM)
 
-            start = timeit.default_timer()
-            selection_sort(L3)
-            end = timeit.default_timer()
-            total3 += end - start
+    for i in range(len(functions)):
+        print(f"{functions[i].name}: {trial_times[i] / n}")
 
-        total_insertion.append(total1/TRIAL_NUM)
-        total_bubble.append(total2/TRIAL_NUM)
-        total_selection.append(total3/TRIAL_NUM)
-
-    print("Insertion Sort: ", total1/n)
-    print("Bubble Sort: ", total2/n)
-    print("Selection Sort: ", total3/n)
-
-    return [total_insertion, total_bubble, total_selection]
+    for i in range(len(functions)):
+        plot.plot(total_times[i])
+        plot.title(f"{functions[i].name}: List Length vs. Time")
+        plot.xlabel("List Length")
+        plot.ylabel("Time (sec)")
+        plot.show()
 
 
-times = experiment1(100, 10)
-plot.plot(times[0])
-plot.show()
-plot.plot(times[1])
-plot.show()
-plot.plot(times[2])
-plot.show()
+functions = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"), \
+             function_info.FunctionInfo(bubble_sort, "Bubble Sort"), \
+             function_info.FunctionInfo(selection_sort, "Selection Sort"), \
+             function_info.FunctionInfo(selection_sort2.selection_sort2, "Selection Sort 2")]
+experiment1(100, 10, functions)
