@@ -7,6 +7,7 @@ import timeit
 import matplotlib.pyplot as plot
 import function_info
 import selection_sort2
+import bubblesort2
 
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
@@ -125,16 +126,30 @@ def experiment(n, k, functions):
     for i in range(len(functions)):
         print(f"{functions[i].name}: {trial_times[i] / n}")
 
-    for i in range(len(functions)):
-        plot.plot(total_times[i])
-        plot.title(f"{functions[i].name}: List Length vs. Time")
-        plot.xlabel("List Length")
-        plot.ylabel("Time (sec)")
-        plot.show()
+    return total_times
 
 
 functions = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
+             function_info.FunctionInfo(insertion_sort2, "Insertion Sort 2"),
              function_info.FunctionInfo(bubble_sort, "Bubble Sort"),
+             function_info.FunctionInfo(bubblesort2.bubblesort2, "Bubble Sort 2"),
              function_info.FunctionInfo(selection_sort, "Selection Sort"),
              function_info.FunctionInfo(selection_sort2.selection_sort2, "Selection Sort 2")]
-experiment(100, 10, functions)
+total_times = experiment(100, 10, functions)
+
+# Graphing function performance on individual plots
+# for i in range(len(functions)):
+#     plot.plot(total_times[i])
+#     plot.title(f"{functions[i].name}: List Length vs. Time")
+#     plot.xlabel("List Length")
+#     plot.ylabel("Time (sec)")
+#     plot.show()
+
+# Comparing function performance on same plot
+for i in range(len(functions)):
+    plot.plot(total_times[i], label = functions[i].name)
+plot.legend()
+plot.title("Sorting Algorithms: List Length vs. Time")
+plot.xlabel("List Length")
+plot.ylabel("Time (sec)")
+plot.show()
