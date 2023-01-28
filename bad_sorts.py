@@ -2,6 +2,7 @@
 This file corresponds to the first graded lab of 2XC3.
 Feel free to modify and/or add functions to this file.
 """
+import math
 import random
 import timeit
 import matplotlib.pyplot as plot
@@ -95,7 +96,8 @@ def find_min_index(L, n):
 # ******************* Testing Functions *******************
 
 
-def experiment(n, k, functions):
+def experiment1(n, k, functions):
+
     total_times = []
     for _ in range(len(functions)):
         total_times.append([])
@@ -128,14 +130,57 @@ def experiment(n, k, functions):
 
     return total_times
 
+def experiment3(n, k, functions):
 
-functions = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
+    total_times = []
+    for _ in range(len(functions)):
+        total_times.append([])
+
+    max_swaps = int(n*math.log(n, 2)/2)
+    num = 0
+    for i in range(max_swaps):
+        num += 1
+        L = create_near_sorted_list(n, k, i)
+
+        for j in range(len(functions)):
+            L_copy = L.copy()
+            start = timeit.default_timer()
+            functions[j].f(L_copy)
+            end = timeit.default_timer()
+            total_times[j].append(end-start)
+
+    return total_times
+
+def graph_exp1():
+    for i in range(len(functions_exp1)):
+        plot.plot(total_times_exp1[i], label = functions_exp1[i].name)
+    plot.legend()
+    plot.title("Sorting Algorithms: List Length vs. Time")
+    plot.xlabel("List Length")
+    plot.ylabel("Time (sec)")
+    plot.show()
+
+def graph_exp3():
+    for i in range(len(functions_exp3)):
+        plot.plot(total_times_exp3[i], label=functions_exp3[i].name)
+    plot.legend()
+    plot.title("Sorting Algorithms: Number of Swaps (sortedness) vs. Time")
+    plot.xlabel("Number of Swaps")
+    plot.ylabel("Time (sec)")
+    plot.show()
+
+functions_exp1 = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
              function_info.FunctionInfo(insertion_sort2, "Insertion Sort 2"),
              function_info.FunctionInfo(bubble_sort, "Bubble Sort"),
              function_info.FunctionInfo(bubblesort2.bubblesort2, "Bubble Sort 2"),
              function_info.FunctionInfo(selection_sort, "Selection Sort"),
              function_info.FunctionInfo(selection_sort2.selection_sort2, "Selection Sort 2")]
-total_times = experiment(100, 10, functions)
+total_times_exp1 = experiment1(100, 100, functions_exp1)
+functions_exp3 = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
+                  function_info.FunctionInfo(bubble_sort, "Bubble Sort"),
+                  function_info.FunctionInfo(selection_sort, "Selection Sort")]
+total_times_exp3 = experiment3(500, 500, functions_exp3)
+graph_exp3()
 
 # Graphing function performance on individual plots
 # for i in range(len(functions)):
@@ -146,10 +191,3 @@ total_times = experiment(100, 10, functions)
 #     plot.show()
 
 # Comparing function performance on same plot
-for i in range(len(functions)):
-    plot.plot(total_times[i], label = functions[i].name)
-plot.legend()
-plot.title("Sorting Algorithms: List Length vs. Time")
-plot.xlabel("List Length")
-plot.ylabel("Time (sec)")
-plot.show()
