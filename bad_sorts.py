@@ -137,17 +137,22 @@ def experiment3(n, k, functions):
         total_times.append([])
 
     max_swaps = int(n*math.log(n, 2)/2)
-    num = 0
+
     for i in range(max_swaps):
-        num += 1
         L = create_near_sorted_list(n, k, i)
 
         for j in range(len(functions)):
-            L_copy = L.copy()
-            start = timeit.default_timer()
-            functions[j].f(L_copy)
-            end = timeit.default_timer()
-            total_times[j].append(end-start)
+            average = 0
+
+            for _ in range(10):
+                L_copy = L.copy()
+                start = timeit.default_timer()
+                functions[j].f(L_copy)
+                end = timeit.default_timer()
+                average += (end-start)
+
+            average /= 10
+            total_times[j].append(average)
 
     return total_times
 
@@ -175,7 +180,7 @@ functions_exp1 = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
              function_info.FunctionInfo(bubblesort2.bubblesort2, "Bubble Sort 2"),
              function_info.FunctionInfo(selection_sort, "Selection Sort"),
              function_info.FunctionInfo(selection_sort2.selection_sort2, "Selection Sort 2")]
-total_times_exp1 = experiment1(100, 100, functions_exp1)
+#total_times_exp1 = experiment1(100, 100, functions_exp1)
 functions_exp3 = [function_info.FunctionInfo(insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bubble_sort, "Bubble Sort"),
                   function_info.FunctionInfo(selection_sort, "Selection Sort")]
