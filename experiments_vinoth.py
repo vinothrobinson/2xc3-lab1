@@ -42,7 +42,7 @@ def experiment1(n, k, functions):
 
     return total_times
 
-
+"""
 def experiment3(n, k, functions):
 
     total_times = []
@@ -68,29 +68,34 @@ def experiment3(n, k, functions):
             total_times[j].append(average)
 
     return total_times
+"""
 
 def experiment4(n, k, functions):
     total_times = []
-
+    TRIAL_NUM = 100
     for _ in range(len(functions)):
         total_times.append([])
+    trial_times = []
 
     for i in range(n):
         L = bad_sorts.create_random_list(i, k)
 
         for j in range(len(functions)):
             average = 0
-            trial_num = 100
+            
 
-            for _ in range(trial_num):
+            for _ in range(TRIAL_NUM):
                 L_copy = L.copy()
                 start = timeit.default_timer()
                 functions[j].f(L_copy)
                 end = timeit.default_timer()
                 average += (end-start)
 
-            average /= trial_num
+            average /= TRIAL_NUM
             total_times[j].append(average)
+        
+    for i in range(len(functions)):
+        print(f"{functions[i].name}: {total_times[i][-1]}")
 
     return total_times
 
@@ -149,7 +154,7 @@ graph_exp3(total_times_exp3, functions_exp3)
 functions_exp4 = [function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort"),
                   function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
                   function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort")]
-total_times_exp4 = experiment4(200, 200, functions_exp4)
+total_times_exp4 = experiment4(50, 50, functions_exp4)
 graph_exp2(total_times_exp4, functions_exp4)
 
 """
