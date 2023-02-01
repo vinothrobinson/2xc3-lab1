@@ -70,6 +70,34 @@ def experiment3(n, k, functions):
 
     return total_times
 
+
+def experiment4(n, k, functions):
+    total_times = []
+    TRIAL_NUM2 = 100
+    for _ in range(len(functions)):
+        total_times.append([])
+
+    for i in range(n):
+        L = bad_sorts.create_random_list(i, k)
+
+        for j in range(len(functions)):
+            average = 0
+
+            for _ in range(TRIAL_NUM2):
+                L_copy = L.copy()
+                start = timeit.default_timer()
+                functions[j].f(L_copy)
+                end = timeit.default_timer()
+                average += (end - start)
+
+            average /= TRIAL_NUM2
+            total_times[j].append(average)
+
+    for i in range(len(functions)):
+        print(f"{functions[i].name}: {total_times[i][-1]}")
+
+    return total_times
+
 def experiment5(n, k, functions):
 
     total_times = []
@@ -157,11 +185,17 @@ functions_exp3 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertio
 #total_times_exp3 = experiment3(500, 500, functions_exp3)
 #graph_exp3(total_times_exp3, functions_exp3)
 
+functions_exp4 = [function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort"),
+                  function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
+                  function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort")]
+#total_times_exp4 = experiment4(250, 250, functions_exp3)
+#graph_exp2(total_times_exp4, functions_exp4)
+
 functions_exp5 = [function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort"),
                   function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
                   function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort")]
-total_times_exp5 = experiment5(100, 100, functions_exp5)
-graph_exp5(total_times_exp5, functions_exp5)
+#total_times_exp5 = experiment5(100, 100, functions_exp5)
+#graph_exp5(total_times_exp5, functions_exp5)
 
 functions_exp6 = [function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
                   function_info.FunctionInfo(double_quicksort.quicksort_dual, "Dual Pivot Quicksort")]
