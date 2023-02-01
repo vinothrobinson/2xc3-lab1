@@ -80,15 +80,16 @@ def experiment4(n, k, functions):
 
         for j in range(len(functions)):
             average = 0
+            trial_num = 100
 
-            for _ in range(10):
+            for _ in range(trial_num):
                 L_copy = L.copy()
                 start = timeit.default_timer()
                 functions[j].f(L_copy)
                 end = timeit.default_timer()
                 average += (end-start)
 
-            average /= 10
+            average /= trial_num
             total_times[j].append(average)
 
     return total_times
