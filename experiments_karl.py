@@ -157,5 +157,5 @@ functions_exp3 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertio
 functions_exp5 = [function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort"),
                   function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
                   function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort")]
-total_times_exp5 = experiment5(300, 300, functions_exp5)
+total_times_exp5 = experiment5(100, 100, functions_exp5)
 graph_exp5(total_times_exp5, functions_exp5)
