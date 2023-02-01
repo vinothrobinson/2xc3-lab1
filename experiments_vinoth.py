@@ -98,13 +98,12 @@ def graph_exp3(times, functions):
     plot.ylabel("Time (sec)")
     plot.show()
 
-
+"""
 functions_exp1 = [function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
                   function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort")]
 total_times_exp1 = experiment1(100, 100, functions_exp1)
 graph_exp1(total_times_exp1, functions_exp1)
-
 
 functions_exp2 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bad_sorts.insertion_sort2, "Insertion Sort 2"),
@@ -120,3 +119,42 @@ functions_exp3 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertio
                   function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort")]
 total_times_exp3 = experiment3(500, 500, functions_exp3)
 graph_exp3(total_times_exp3, functions_exp3)
+"""
+
+functions_exp4 = [function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort"),
+                  function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
+                  function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort")]
+total_times_exp4 = experiment1(100, 100, functions_exp4)
+graph_exp2(total_times_exp4, functions_exp4)
+
+"""
+total1 = 0
+total2 = 0
+total3 = 0
+data = []
+n = 1000
+k = 100
+
+for _ in range(n):
+    L = bad_sorts.create_random_list(k, k)
+    L2 = L.copy()
+
+    start = timeit.default_timer()
+    good_sorts.heapsort(L)
+    end = timeit.default_timer()
+    total1 += end - start
+
+    start = timeit.default_timer()
+    good_sorts.mergesort(L)
+    end = timeit.default_timer()
+    total2 += end - start
+
+    start = timeit.default_timer()
+    good_sorts.quicksort(L)
+    end = timeit.default_timer()
+    total3 += end - start
+
+print("Method 1 - Heap Sort: ", total1/n)
+print("Method 2 - Merge Sort: ", total2/n)
+print("Method 3 - Quick Sort: ", total3/n)
+"""
