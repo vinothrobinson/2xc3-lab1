@@ -4,7 +4,7 @@ import bad_sorts
 import improved_bad_sorts
 import function_info
 import matplotlib.pyplot as plot
-
+import good_sorts
 # ******************* Testing Functions *******************
 
 
