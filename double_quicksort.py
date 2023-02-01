@@ -1,10 +1,10 @@
-def quicksort_dual(L):
-    copy = quicksort_copy_dual(L)
+def dual_quicksort(L):
+    copy = dual_quicksort_copy(L)
     for i in range(len(L)):
         L[i] = copy[i]
 
 
-def quicksort_copy_dual(L):
+def dual_quicksort_copy(L):
     if len(L) < 2:
         return L
     pivot_l = L[0]
@@ -19,4 +19,4 @@ def quicksort_copy_dual(L):
             right.append(num)
         else:
             middle.append(num)
-    return quicksort_copy_dual(left) + [pivot_l] + quicksort_copy_dual(middle) + [pivot_r] + quicksort_copy_dual(right)
+    return dual_quicksort_copy(left) + [pivot_l] + dual_quicksort_copy(middle) + [pivot_r] + dual_quicksort_copy(right)

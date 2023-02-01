@@ -14,10 +14,10 @@ def experiment1(n, k, functions):
     total_times = []
     for _ in range(len(functions)):
         total_times.append([])
-    trial_times = []
+
 
     for i in range(n):
-
+        trial_times = []
         for _ in range(len(functions)):
             trial_times.append(0)
 
@@ -165,6 +165,5 @@ graph_exp5(total_times_exp5, functions_exp5)
 
 functions_exp6 = [function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
                   function_info.FunctionInfo(double_quicksort.quicksort_dual, "Dual Pivot Quicksort")]
-total_times_exp6 = [experiment1(i, i, functions_exp6) for i in [100, 250, 500]]
-for total_times in total_times_exp6:
-    graph_exp2(total_times, functions_exp6)
+total_times_exp6 = experiment1(250, 250, functions_exp6)
+graph_exp2(total_times_exp6, functions_exp6)
