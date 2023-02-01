@@ -1,9 +1,11 @@
 import math
 import timeit
+import matplotlib.pyplot as plot
 import bad_sorts
 import improved_bad_sorts
+import good_sorts
+import double_quicksort
 import function_info
-import matplotlib.pyplot as plot
 
 # ******************* Testing Functions *******************
 
@@ -70,6 +72,7 @@ def experiment3(n, k, functions):
     return total_times
 
 
+# Plots on different graphs, with x-axis of list length
 def graph_exp1(times, functions):
     for i in range(len(functions)):
         plot.plot(times[i])
@@ -79,6 +82,7 @@ def graph_exp1(times, functions):
         plot.show()
 
 
+# Plots on same graph, with x-axis of list length
 def graph_exp2(times, functions):
     for i in range(len(functions)):
         plot.plot(times[i], label=functions[i].name)
@@ -89,6 +93,7 @@ def graph_exp2(times, functions):
     plot.show()
 
 
+# Plots on same graph, with x-axis of list sortedness
 def graph_exp3(times, functions):
     for i in range(len(functions)):
         plot.plot(times[i], label=functions[i].name)
@@ -102,8 +107,8 @@ def graph_exp3(times, functions):
 functions_exp1 = [function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
                   function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort")]
-total_times_exp1 = experiment1(100, 100, functions_exp1)
-graph_exp1(total_times_exp1, functions_exp1)
+#total_times_exp1 = experiment1(100, 100, functions_exp1)
+#graph_exp1(total_times_exp1, functions_exp1)
 
 
 functions_exp2 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
@@ -112,11 +117,17 @@ functions_exp2 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertio
                   function_info.FunctionInfo(improved_bad_sorts.bubblesort2, "Bubble Sort 2"),
                   function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
                   function_info.FunctionInfo(improved_bad_sorts.selection_sort2, "Selection Sort 2")]
-total_times_exp2 = experiment1(100, 100, functions_exp2)
-graph_exp2(total_times_exp2, functions_exp2)
+#total_times_exp2 = experiment1(100, 100, functions_exp2)
+#graph_exp2(total_times_exp2, functions_exp2)
 
 functions_exp3 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort"),
                   function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort")]
-total_times_exp3 = experiment3(500, 500, functions_exp3)
-graph_exp3(total_times_exp3, functions_exp3)
+#total_times_exp3 = experiment3(500, 500, functions_exp3)
+#graph_exp3(total_times_exp3, functions_exp3)
+
+functions_exp6 = [function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
+                  function_info.FunctionInfo(double_quicksort.quicksort_dual, "Dual Pivot Quicksort")]
+total_times_exp6 = [experiment1(i, i, functions_exp6) for i in [100, 250, 500]]
+for total_times in total_times_exp6:
+    graph_exp2(total_times, functions_exp6)
