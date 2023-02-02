@@ -5,6 +5,7 @@ import bad_sorts
 import improved_bad_sorts
 import good_sorts
 import double_quicksort
+import iterative_mergesort
 import function_info
 # ******************* Testing Functions *******************
 
@@ -160,10 +161,15 @@ functions_exp3 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertio
 functions_exp5 = [function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort"),
                   function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
                   function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort")]
-total_times_exp5 = experiment5(100, 100, functions_exp5)
-graph_exp5(total_times_exp5, functions_exp5)
+# total_times_exp5 = experiment5(100, 100, functions_exp5)
+# graph_exp5(total_times_exp5, functions_exp5)
 
 functions_exp6 = [function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
-                  function_info.FunctionInfo(double_quicksort.quicksort_dual, "Dual Pivot Quicksort")]
-total_times_exp6 = experiment1(250, 250, functions_exp6)
-graph_exp2(total_times_exp6, functions_exp6)
+                  function_info.FunctionInfo(double_quicksort.dual_quicksort, "Dual Pivot Quicksort")]
+# total_times_exp6 = experiment1(250, 250, functions_exp6)
+# graph_exp2(total_times_exp6, functions_exp6)
+
+functions_exp7 = [function_info.FunctionInfo(good_sorts.mergesort, "Mergesort"),
+                  function_info.FunctionInfo(iterative_mergesort.bottom_up_mergesort, "Bottom-up Mergesort")]
+total_times_exp7 = experiment1(1000, 1000, functions_exp7)
+graph_exp2(total_times_exp7, functions_exp7)
