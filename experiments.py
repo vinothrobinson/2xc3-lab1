@@ -205,5 +205,5 @@ functions_exp6 = [function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
 
 functions_exp7 = [function_info.FunctionInfo(good_sorts.mergesort, "Mergesort"),
                   function_info.FunctionInfo(iterative_mergesort.bottom_up_mergesort, "Bottom-up Mergesort")]
-total_times_exp7 = experiment1(1000, 1000, functions_exp7)
+total_times_exp7 = experiment1(100, 100, functions_exp7)
 graph_exp2(total_times_exp7, functions_exp7)
