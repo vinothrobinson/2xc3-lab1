@@ -2,6 +2,7 @@ import math
 import timeit
 import bad_sorts
 import improved_bad_sorts
+import double_quicksort
 import function_info
 import matplotlib.pyplot as plot
 import good_sorts
@@ -72,10 +73,9 @@ def experiment3(n, k, functions):
 
 def experiment4(n, k, functions):
     total_times = []
-    TRIAL_NUM = 100
+    TRIAL_NUM2 = 100
     for _ in range(len(functions)):
         total_times.append([])
-    trial_times = []
 
     for i in range(n):
         L = bad_sorts.create_random_list(i, k)
@@ -84,14 +84,14 @@ def experiment4(n, k, functions):
             average = 0
             
 
-            for _ in range(TRIAL_NUM):
+            for _ in range(TRIAL_NUM2):
                 L_copy = L.copy()
                 start = timeit.default_timer()
                 functions[j].f(L_copy)
                 end = timeit.default_timer()
                 average += (end-start)
 
-            average /= TRIAL_NUM
+            average /= TRIAL_NUM2
             total_times[j].append(average)
         
     for i in range(len(functions)):
@@ -151,10 +151,11 @@ total_times_exp3 = experiment3(500, 500, functions_exp3)
 graph_exp3(total_times_exp3, functions_exp3)
 """
 
-functions_exp4 = [function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort"),
-                  function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
-                  function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort")]
-total_times_exp4 = experiment4(50, 50, functions_exp4)
+functions_exp4 = [function_info.FunctionInfo(improved_bad_sorts.selection_sort2, "New Selection Sort"),
+                  function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
+                  # function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort")
+                  ]
+total_times_exp4 = experiment4(250, 250, functions_exp4)
 graph_exp2(total_times_exp4, functions_exp4)
 
 """

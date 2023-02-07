@@ -8,71 +8,8 @@ import double_quicksort
 import iterative_mergesort
 import function_info
 # ******************* Testing Functions *******************
-
-
-def experiment1(n, k, functions):
-
-    total_times = []
-    for _ in range(len(functions)):
-        total_times.append([])
-
-
-    for i in range(n):
-        trial_times = []
-        for _ in range(len(functions)):
-            trial_times.append(0)
-
-        test_lists = []
-
-        TRIAL_NUM = 100
-        for _ in range(TRIAL_NUM):
-            test_lists.append(bad_sorts.create_random_list(i, k))
-            for _ in range(1, len(functions)):
-                test_lists.append(test_lists[0].copy())
-
-            for j in range(len(functions)):
-                start = timeit.default_timer()
-                functions[j].f(test_lists[j])
-                end = timeit.default_timer()
-                trial_times[j] += end - start
-
-        for j in range(0, len(functions)):
-            total_times[j].append(trial_times[j] / TRIAL_NUM)
-
-    for i in range(len(functions)):
-        print(f"{functions[i].name}: {trial_times[i] / n}")
-
-    return total_times
-
-
-def experiment3(n, k, functions):
-
-    total_times = []
-    for _ in range(len(functions)):
-        total_times.append([])
-
-    max_swaps = int(n*math.log(n, 2)/2)
-
-    for i in range(max_swaps):
-        L = bad_sorts.create_near_sorted_list(n, k, i)
-
-        for j in range(len(functions)):
-            average = 0
-
-            for _ in range(10):
-                L_copy = L.copy()
-                start = timeit.default_timer()
-                functions[j].f(L_copy)
-                end = timeit.default_timer()
-                average += (end-start)
-
-            average /= 10
-            total_times[j].append(average)
-
-    return total_times
-
-
-def experiment4(n, k, functions):
+# This function was used to test experiments 1, 2, 4, 6, 7, and 8
+def testing_function1(n, k, functions):
     total_times = []
     TRIAL_NUM2 = 100
     for _ in range(len(functions)):
@@ -99,8 +36,34 @@ def experiment4(n, k, functions):
 
     return total_times
 
-def experiment5(n, k, functions):
+# This function was used to test experiment 3
+def testing_function2(n, k, functions):
+    total_times = []
+    for _ in range(len(functions)):
+        total_times.append([])
 
+    max_swaps = int(n*math.log(n, 2)/2)
+
+    for i in range(max_swaps):
+        L = bad_sorts.create_near_sorted_list(n, k, i)
+
+        for j in range(len(functions)):
+            average = 0
+
+            for _ in range(10):
+                L_copy = L.copy()
+                start = timeit.default_timer()
+                functions[j].f(L_copy)
+                end = timeit.default_timer()
+                average += (end-start)
+
+            average /= 10
+            total_times[j].append(average)
+
+    return total_times
+
+# This function was used to test experiment 5
+def testing_function3(n, k, functions):
     total_times = []
     for _ in range(len(functions)):
         total_times.append([])
@@ -123,19 +86,9 @@ def experiment5(n, k, functions):
 
     return total_times
 
-
-# Plots on different graphs, with x-axis of list length
-def graph_exp1(times, functions):
-    for i in range(len(functions)):
-        plot.plot(times[i])
-        plot.title(f"{functions[i].name}: List Length vs. Time")
-        plot.xlabel("List Length")
-        plot.ylabel("Time (sec)")
-        plot.show()
-
-
-# Plots on same graph, with x-axis of list length
-def graph_exp2(times, functions):
+# Plots on same graph, with x-axis of list length, used for
+# experiments 1, 2, 4, 6, 7, and 8
+def multi_graph(times, functions):
     for i in range(len(functions)):
         plot.plot(times[i], label=functions[i].name)
     plot.legend()
@@ -145,8 +98,9 @@ def graph_exp2(times, functions):
     plot.show()
 
 
-# Plots on same graph, with x-axis of list sortedness
-def graph_exp3(times, functions):
+# Plots on same graph, with x-axis of list sortedness, used for
+# experiments 3 and 5.
+def swaps_graph(times, functions):
     for i in range(len(functions)):
         plot.plot(times[i], label=functions[i].name)
     plot.legend()
@@ -155,55 +109,59 @@ def graph_exp3(times, functions):
     plot.ylabel("Time (sec)")
     plot.show()
 
-def graph_exp5(times, functions):
-    for i in range(len(functions)):
-        plot.plot(times[i], label=functions[i].name)
-    plot.legend()
-    plot.title("Sorting Algorithms: Number of Swaps (sortedness) vs. Time")
-    plot.xlabel("Number of Swaps")
-    plot.ylabel("Time (sec)")
-    plot.show()
-
-
+"""
+Below is the code we ran for testing each experiment, we commented
+out the lines used to test the code for each experiment (the total_times_exp#
+and the graphing function that was used). To test these experiments, simply
+uncomment the correct testing function. Note that the test functions for experiment
+2 are split into two parts, one to test bubble sort and one to test selection sort
+"""
 functions_exp1 = [function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
                   function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort")]
-#total_times_exp1 = experiment1(100, 100, functions_exp1)
-#graph_exp1(total_times_exp1, functions_exp1)
+# total_times_exp1 = testing_function1(250, 250, functions_exp1)
+# multi_graph(total_times_exp1, functions_exp1)
 
-functions_exp2 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
-                  function_info.FunctionInfo(bad_sorts.insertion_sort2, "Insertion Sort 2"),
-                  function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort"),
-                  function_info.FunctionInfo(improved_bad_sorts.bubblesort2, "Bubble Sort 2"),
-                  function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
-                  function_info.FunctionInfo(improved_bad_sorts.selection_sort2, "Selection Sort 2")]
-#total_times_exp2 = experiment1(100, 100, functions_exp2)
-#graph_exp2(total_times_exp2, functions_exp2)
+functions_exp2a = [function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort"),
+                   function_info.FunctionInfo(improved_bad_sorts.bubblesort2, "Bubble Sort 2")]
+# total_times_exp2a = testing_function1(250, 250, functions_exp2a)
+# multi_graph(total_times_exp2a, functions_exp2a)
+
+functions_exp2b = [function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort"),
+                   function_info.FunctionInfo(improved_bad_sorts.selection_sort2, "Selection Sort 2")]
+# total_times_exp2b = testing_function1(250, 250, functions_exp2b)
+# multi_graph(total_times_exp2b, functions_exp2b)
 
 functions_exp3 = [function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort"),
                   function_info.FunctionInfo(bad_sorts.bubble_sort, "Bubble Sort"),
                   function_info.FunctionInfo(bad_sorts.selection_sort, "Selection Sort")]
-#total_times_exp3 = experiment3(500, 500, functions_exp3)
-#graph_exp3(total_times_exp3, functions_exp3)
+#total_times_exp3 = testing_function2(500, 500, functions_exp3)
+#swaps_graph(total_times_exp3, functions_exp3)
 
 functions_exp4 = [function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort"),
                   function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
                   function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort")]
-#total_times_exp4 = experiment4(250, 250, functions_exp3)
-#graph_exp2(total_times_exp4, functions_exp4)
+#total_times_exp4 = testing_function1(250, 250, functions_exp3)
+#multi_graph(total_times_exp4, functions_exp4)
 
 functions_exp5 = [function_info.FunctionInfo(good_sorts.quicksort, "Quick Sort"),
                   function_info.FunctionInfo(good_sorts.mergesort, "Merge Sort"),
                   function_info.FunctionInfo(good_sorts.heapsort, "Heap Sort")]
-#total_times_exp5 = experiment5(100, 100, functions_exp5)
-#graph_exp5(total_times_exp5, functions_exp5)
+#total_times_exp5 = testing_function3(100, 100, functions_exp5)
+#swaps_graph(total_times_exp5, functions_exp5)
 
 functions_exp6 = [function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
                   function_info.FunctionInfo(double_quicksort.dual_quicksort, "Dual Pivot Quicksort")]
-# total_times_exp6 = experiment1(250, 250, functions_exp6)
-# graph_exp2(total_times_exp6, functions_exp6)
+# total_times_exp6 = testing_function1(250, 250, functions_exp6)
+# multi_graph(total_times_exp6, functions_exp6)
 
 functions_exp7 = [function_info.FunctionInfo(good_sorts.mergesort, "Mergesort"),
                   function_info.FunctionInfo(iterative_mergesort.bottom_up_mergesort, "Bottom-up Mergesort")]
-total_times_exp7 = experiment1(100, 100, functions_exp7)
-graph_exp2(total_times_exp7, functions_exp7)
+# total_times_exp7 = testing_function1(1000, 1000, functions_exp7)
+# multi_graph(total_times_exp7, functions_exp7)
+
+functions_exp8 = [function_info.FunctionInfo(good_sorts.mergesort, "Mergesort"),
+                  function_info.FunctionInfo(good_sorts.quicksort, "Quicksort"),
+                  function_info.FunctionInfo(bad_sorts.insertion_sort, "Insertion Sort")]
+total_times_exp8 = testing_function1(35, 35, functions_exp8)
+multi_graph(total_times_exp8, functions_exp8)
