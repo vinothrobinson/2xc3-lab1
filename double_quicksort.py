@@ -7,11 +7,14 @@ def dual_quicksort(L):
 def dual_quicksort_copy(L):
     if len(L) < 2:
         return L
+
     pivot_l = L[0]
     pivot_r = L[1]
     if pivot_l > pivot_r:
         pivot_l, pivot_r = pivot_r, pivot_l
+
     left, middle, right = [], [], []
+
     for num in L[2:]:
         if num < pivot_l:
             left.append(num)
